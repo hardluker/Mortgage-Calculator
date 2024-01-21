@@ -3,68 +3,51 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String [] args) {
-        //Declaring constants to avoid magic numbers
-        final float PERCENT = 100.00F;
-        final int MONTHS_IN_YEAR = 12;
 
-        //Creating the scanner
-        Scanner scanner = new Scanner(System.in);
+        //Getting Principal, Annual Interest Rate, and Years
+        double principal = readNumber("Principal: ", 1_000.00, 1_000_000.00);
+        double annualInterestRate = readNumber("Annual Interest Rate: ", 0, 30);
+        double years = readNumber("Years: ", 1, 40);
 
-        //Getting Principal Value with error handling
-        double principal;
-        while(true){
-            System.out.print("Principal: ");
-            principal = scanner.nextInt();
+        //Calculating the mortgage payment
+        double mortgagePayment = calculateMortgagePayment(principal, annualInterestRate, years);
 
-            //Confirming principal is between 1,000 and 100,000,000.
-            if (principal >= 1_000.00 && principal <= 100_000_000.00){
-                break;
-            }
-                System.out.println("Principal must be between 1,000 - 100,000,000");
-        }
-
-
-        //Getting Interest rate with error handling.
-        double monthlyInterestRate;
-        while (true) {
-            System.out.print("Interest Rate: ");
-            double interestRate = scanner.nextDouble();
-
-            //Confirming interest rate is between 0 and 30 otherwise.
-            if (interestRate > 0.00 && interestRate <= 30.00) {
-                monthlyInterestRate = (interestRate / PERCENT / MONTHS_IN_YEAR);
-                break;
-            }
-                System.out.println("Interest rate must be between 0.00 - 30.00");
-        }
-
-        //Getting the period in years.
-        double years;
-        while (true) {
-            System.out.print("Number of Years: ");
-            years = scanner.nextDouble();
-
-            //Confirming years is between 1 and 40.
-            if (years >= 1.00 && years <= 40.00) {
-                break;
-            }
-            System.out.println("Years must be between 1 - 40");
-        }
-
-        //Running method for monthly payment calculation
-        double monthlyPayment = calculateMortgagePayment(principal, monthlyInterestRate, years);
-
-        //Formatting and printing monthly payment
-        String mortgageFormatted = NumberFormat.getCurrencyInstance().format(monthlyPayment);
+        //Formatting and printing mortgage payment
+        String mortgageFormatted = NumberFormat.getCurrencyInstance().format(mortgagePayment);
         System.out.println("Monthly payment is " + mortgageFormatted);
-
-
-
     }
 
-    //Method for calculating monthly payment.
-    static double calculateMortgagePayment(double principal, double interestRate, double years) {
-        return (principal * ((interestRate * Math.pow(1.00 + interestRate, years * 12))
-                /(Math.pow(1.00 + interestRate, years * 12) - 1)));
+
+
+    //Method for getting values from the user input
+    public static double readNumber(String prompt, double min, double max) {
+        Scanner scanner = new Scanner(System.in);
+        double value;
+        while (true) {
+            System.out.print(prompt);
+            value = scanner.nextDouble();
+
+            //Confirming value is within range
+            if (value >= min && value <= max) {
+                break;
+            }
+            System.out.println("Enter a value between " + min + "and " + max);
+        }
+        return value;
+    }
+
+
+
+    //Method for calculating Mortgage payment.
+    public static double calculateMortgagePayment(double principal, double AnnualInterestRate, double years) {
+        //Defining the monthly interest rate
+        final float PERCENT = 100.00F;
+        final int MONTHS_IN_YEAR = 12;
+        double monthlyInterestRate = AnnualInterestRate / PERCENT / MONTHS_IN_YEAR;
+
+        //Calculating the monthly payment
+        return (principal * ((monthlyInterestRate * Math.pow(1.00 + monthlyInterestRate, years * 12))
+                /(Math.pow(1.00 + monthlyInterestRate, years * 12) - 1)));
+
     }
 }
