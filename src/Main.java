@@ -11,9 +11,9 @@ public class Main {
         //Creating the scanner
         Scanner scanner = new Scanner(System.in);
 
-        //Getting Principal
+        //Getting Principal Value
         System.out.print("Principal: ");
-        double principal = (double)scanner.nextInt();
+        double principal = scanner.nextInt();
 
         //Getting Interest rate
         System.out.print("Interest Rate: ");
@@ -21,14 +21,14 @@ public class Main {
 
         //Getting the period in years
         System.out.print("Number of Years: ");
-        double years = (double)scanner.nextInt();
+        double years = scanner.nextInt();
 
         //Running method for monthly payment calculation
         double monthlyPayment = calculateMortgagePayment(principal, monthlyInterestRate, years);
 
         //Formatting and printing monthly payment
         String mortgageFormatted = NumberFormat.getCurrencyInstance().format(monthlyPayment);
-        System.out.println("Payment is " + mortgageFormatted);
+        System.out.println("Monthly payment is " + mortgageFormatted);
 
 
 
