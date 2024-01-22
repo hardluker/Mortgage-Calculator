@@ -36,7 +36,6 @@ public class Main {
     }
 
 
-
     //Method for calculating the balance through the iterations of the payment schedule
     public static double calculateBalance(double principal, float annualInterestRate, byte years, short numberOfPaymentsMade) {
         float monthlyInterestRate = annualInterestRate / PERCENT / MONTHS_IN_YEAR;
