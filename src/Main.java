@@ -14,6 +14,7 @@ public class Main {
         //Calculating and printing the mortgage payment
         printMortgage(principal, annualInterestRate, years);
 
+        //Printing a payment schedule
         printPaymentSchedule(years, principal, annualInterestRate);
     }
 
